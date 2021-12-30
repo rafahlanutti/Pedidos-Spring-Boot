@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rafael.estudos.springboot.domain.Categoria;
+import com.rafael.estudos.springboot.exception.ObjectNotFoundException;
 import com.rafael.estudos.springboot.repository.CategoriaRepository;
 
 @Service
@@ -14,6 +15,6 @@ public class CategoriaService {
 
 	public Categoria buscar(Integer id) {
 
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 }
