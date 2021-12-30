@@ -2,7 +2,9 @@ package com.rafael.estudos.springboot.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -33,6 +36,9 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega")
 	private Endereco enderecoDeEntrega;
+
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido(Integer id, Date instance, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
@@ -104,6 +110,14 @@ public class Pedido implements Serializable {
 		return Objects.equals(cliente, other.cliente) && Objects.equals(enderecoDeEntrega, other.enderecoDeEntrega)
 				&& Objects.equals(id, other.id) && Objects.equals(instance, other.instance)
 				&& Objects.equals(pagamento, other.pagamento);
+	}
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 }
