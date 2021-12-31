@@ -1,7 +1,6 @@
 package com.rafael.estudos.springboot.domain;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Endereco implements Serializable {
-
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -25,14 +24,14 @@ public class Endereco implements Serializable {
 	private String bairro;
 	private String cep;
 
-	@ManyToOne
-	@JoinColumn(name = "cidade_id")
-	private Cidade cidade;
-
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
 
 	public Endereco() {
 	}
@@ -116,7 +115,10 @@ public class Endereco implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bairro, cep, cidade, cliente, complemento, id, logradouro, numero);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -128,10 +130,12 @@ public class Endereco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		return Objects.equals(bairro, other.bairro) && Objects.equals(cep, other.cep)
-				&& Objects.equals(cidade, other.cidade) && Objects.equals(cliente, other.cliente)
-				&& Objects.equals(complemento, other.complemento) && Objects.equals(id, other.id)
-				&& Objects.equals(logradouro, other.logradouro) && Objects.equals(numero, other.numero);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }
