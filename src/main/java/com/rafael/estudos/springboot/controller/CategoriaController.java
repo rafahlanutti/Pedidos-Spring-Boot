@@ -1,7 +1,8 @@
 package com.rafael.estudos.springboot.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.rafael.estudos.springboot.domain.Categoria;
 import com.rafael.estudos.springboot.dto.CategoriaDTO;
 import com.rafael.estudos.springboot.service.CategoriaService;
 
@@ -29,7 +29,7 @@ public class CategoriaController {
 	CategoriaService service;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> find(@PathVariable(value = "id") Integer id) {
+	public ResponseEntity<CategoriaDTO> find(@PathVariable(value = "id") Integer id) {
 
 		var categoria = service.find(id);
 
@@ -37,18 +37,18 @@ public class CategoriaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO obj) {
 
 		obj = service.insert(obj);
-		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.id).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable(value = "id") Integer id, @RequestBody Categoria obj) {
+	public ResponseEntity<Void> update(@Valid @PathVariable(value = "id") Integer id, @RequestBody CategoriaDTO obj) {
 
-		obj.setId(id);
+		obj.id = id;
 		this.service.update(obj);
 
 		return ResponseEntity.noContent().build();
@@ -63,11 +63,7 @@ public class CategoriaController {
 
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
-
-		var categorias = this.service.findAll();
-		var categoriasDto = categorias.stream().map(cat -> new CategoriaDTO(cat)).collect(Collectors.toList());
-
-		return ResponseEntity.ok(categoriasDto);
+		return ResponseEntity.ok(this.service.findAll());
 
 	}
 

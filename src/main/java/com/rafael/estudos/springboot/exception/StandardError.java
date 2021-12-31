@@ -1,4 +1,4 @@
-package com.rafael.estudos.springboot.handler;
+package com.rafael.estudos.springboot.exception;
 
 import java.io.Serializable;
 
