@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rafael.estudos.springboot.domain.Pedido;
 import com.rafael.estudos.springboot.service.PedidoService;
 
 @RestController
@@ -17,9 +18,9 @@ public class PedidoController {
 	PedidoService service;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> find(@PathVariable(value = "id") Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable(value = "id") Integer id) {
 
-		var pedido = service.buscar(id);
+		var pedido = service.find(id);
 
 		return ResponseEntity.ok().body(pedido);
 
