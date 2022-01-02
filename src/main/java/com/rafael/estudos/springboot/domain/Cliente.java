@@ -28,7 +28,7 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
+
 	@Column(unique = true)
 	private String email;
 	private String cpfOuCnpj;
@@ -90,11 +90,11 @@ public class Cliente implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
-	public TipoCliente getTipo() {
+	public TipoCliente getTipoCliente() {
 		return TipoCliente.toEnum(tipo);
 	}
 
-	public void setTipo(TipoCliente tipo) {
+	public void setTipoCliente(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.rafael.estudos.springboot.domain.Categoria;
 import com.rafael.estudos.springboot.domain.Cidade;
@@ -31,6 +32,7 @@ import com.rafael.estudos.springboot.repository.PagamentoRepository;
 import com.rafael.estudos.springboot.repository.PedidoRepository;
 import com.rafael.estudos.springboot.repository.ProdutoRepository;
 
+@ComponentScan
 @SpringBootApplication
 public class Startup implements CommandLineRunner {
 
