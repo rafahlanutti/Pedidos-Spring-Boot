@@ -8,18 +8,20 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.rafael.estudos.springboot.domain.Cliente;
+import com.rafael.estudos.springboot.service.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public Integer id;
+	private Integer id;
 	@NotEmpty
 	@Length(min = 5, max = 180)
-	public String nome;
+	private String nome;
 
 	@Email
-	public String email;
+	private String email;
 
 	public ClienteDTO() {
 
@@ -36,6 +38,30 @@ public class ClienteDTO implements Serializable {
 		this.id = cliente.getId();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
