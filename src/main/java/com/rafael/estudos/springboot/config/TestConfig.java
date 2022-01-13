@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.rafael.estudos.springboot.service.DbService;
+import com.rafael.estudos.springboot.service.EmailService;
+import com.rafael.estudos.springboot.service.MockMailService;
 
 @Configuration
 @Profile("test")
@@ -15,13 +17,17 @@ public class TestConfig {
 
 	@Autowired
 	private DbService service;
-	
 
 	@Bean
 	public boolean instantiateDataBase() throws ParseException {
 
 		service.instantiateDataBase();
 		return true;
+	}
+
+	@Bean
+	public EmailService emailService() {
+		return new MockMailService();
 	}
 
 }
