@@ -21,6 +21,15 @@ public class ClienteNewDTO implements Serializable {
 	private String telefone2;
 	private String telefone3;
 	private Integer cidadeId;
+	private String senha;
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	public ClienteNewDTO() {
 	}
