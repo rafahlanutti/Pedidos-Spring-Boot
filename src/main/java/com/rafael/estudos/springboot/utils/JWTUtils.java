@@ -25,20 +25,27 @@ public class JWTUtils {
 
 	public boolean tokenValido(String token) {
 		Claims claims = getClaims(token);
-		if (claims != null) {
-			String username = claims.getSubject();
-			Date expiration = claims.getExpiration();
-			Date now = new Date(System.currentTimeMillis());
-			if (username != null && expiration != null && now.before(expiration)) {
-				return true;
-			}
+		if (hasClaims(claims)) {
+			return isValidToken(claims);
 		}
 		return false;
 	}
 
+	private boolean isValidToken(Claims claims) {
+		String username = claims.getSubject();
+		Date expiration = claims.getExpiration();
+		Date now = new Date(System.currentTimeMillis());
+
+		return username != null && expiration != null && now.before(expiration);
+	}
+
+	private boolean hasClaims(Claims claims) {
+		return claims != null;
+	}
+
 	public String getUsername(String token) {
 		Claims claims = getClaims(token);
-		if (claims != null) {
+		if (hasClaims(claims)) {
 			return claims.getSubject();
 		}
 		return null;

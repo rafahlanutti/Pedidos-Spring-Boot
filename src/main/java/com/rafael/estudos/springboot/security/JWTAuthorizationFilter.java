@@ -17,6 +17,8 @@ import com.rafael.estudos.springboot.utils.JWTUtils;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
+	private static final String AUTHORIZATION = "Authorization";
+	private static final String BEARER = "Bearer ";
 	private JWTUtils jwtUtils;
 	private UserDetailsService detailsService;
 
@@ -31,9 +33,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		String header = request.getHeader("Authorization");
+		String header = request.getHeader(AUTHORIZATION);
 
-		if (header != null && header.startsWith("Bearer ")) {
+		if (hasHeaderValid(header)) {
 			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
 
 			if (auth != null) {
@@ -43,6 +45,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		chain.doFilter(request, response);
 	}
 
+	private boolean hasHeaderValid(String header) {
+		return header != null && header.startsWith(BEARER);
+	}
+
 	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		if (jwtUtils.tokenValido(token)) {
 			String username = jwtUtils.getUsername(token);
@@ -50,7 +56,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		}
 		return null;
-
 	}
 
 }
