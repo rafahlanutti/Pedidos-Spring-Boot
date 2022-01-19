@@ -2,18 +2,18 @@ package com.rafael.estudos.springboot.domain.enums;
 
 public enum Perfil {
 
-	ADMIN(1, "HOLE_ADMIN"), CLIENTE(2, "HOLE_CLIENTE");
+	ADMIN(1, "ROLE_ADMIN"), CLIENTE(2, "ROLE_CLIENTE");
 
-	private Integer codigo;
+	private int cod;
 	private String descricao;
 
-	private Perfil(int codigo, String descricao) {
-		this.codigo = codigo;
+	private Perfil(int cod, String descricao) {
+		this.cod = cod;
 		this.descricao = descricao;
 	}
 
-	public Integer getCodigo() {
-		return codigo;
+	public int getCodigo() {
+		return cod;
 	}
 
 	public String getDescricao() {
@@ -21,15 +21,18 @@ public enum Perfil {
 	}
 
 	public static Perfil toEnum(Integer cod) {
+
 		if (cod == null) {
 			return null;
 		}
-		for (Perfil t : Perfil.values()) {
-			if (cod.equals(t.codigo)) {
-				return t;
+
+		for (Perfil x : Perfil.values()) {
+			if (cod.equals(x.getCodigo())) {
+				return x;
 			}
 		}
-		throw new IllegalArgumentException("Tipo inválido" + cod);
 
+		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
+
 }
