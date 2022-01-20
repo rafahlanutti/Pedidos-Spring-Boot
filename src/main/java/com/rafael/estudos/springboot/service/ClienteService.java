@@ -16,13 +16,16 @@ import org.springframework.stereotype.Service;
 import com.rafael.estudos.springboot.domain.Cidade;
 import com.rafael.estudos.springboot.domain.Cliente;
 import com.rafael.estudos.springboot.domain.Endereco;
+import com.rafael.estudos.springboot.domain.enums.Perfil;
 import com.rafael.estudos.springboot.domain.enums.TipoCliente;
 import com.rafael.estudos.springboot.dto.ClienteDTO;
 import com.rafael.estudos.springboot.dto.ClienteNewDTO;
+import com.rafael.estudos.springboot.exception.AuthorizationException;
 import com.rafael.estudos.springboot.exception.DataIntegrityException;
 import com.rafael.estudos.springboot.exception.ObjectNotFoundException;
 import com.rafael.estudos.springboot.repository.ClienteRepository;
 import com.rafael.estudos.springboot.repository.EnderecoRepository;
+import com.rafael.estudos.springboot.security.UserSpringSecurity;
 
 @Service
 public class ClienteService {
@@ -37,6 +40,14 @@ public class ClienteService {
 	private BCryptPasswordEncoder passwordEncode;
 
 	public Cliente find(Integer id) {
+
+		UserSpringSecurity user = UserService.authenticated();
+
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+
+		}
+
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
