@@ -37,6 +37,10 @@ public class InstantiationMongoDB implements CommandLineRunner {
 
 		repository.saveAll(Arrays.asList(maria, alex, bob));
 		postRepository.saveAll(Arrays.asList(post1, post2));
+
+		maria.getPost().addAll(Arrays.asList(post1, post2));
+
+		repository.save(maria);
 	}
 
 }
