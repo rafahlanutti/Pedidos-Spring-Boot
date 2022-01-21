@@ -1,0 +1,50 @@
+package com.rafael.estudos.springboot.dto;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.rafael.estudos.springboot.domain.User;
+
+public class CommentDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String text;
+	private Date date;
+	private User auth;
+
+	public CommentDTO() {
+		super();
+	}
+
+	public CommentDTO(String text, Date date, User auth) {
+		super();
+		this.text = text;
+		this.date = date;
+		this.auth = auth;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public User getAuth() {
+		return auth;
+	}
+
+	public void setAuth(User auth) {
+		this.auth = auth;
+	}
+
+}

@@ -1,11 +1,15 @@
 package com.rafael.estudos.springboot.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.rafael.estudos.springboot.dto.CommentDTO;
 
 @Document
 public class Post implements Serializable {
@@ -16,6 +20,8 @@ public class Post implements Serializable {
 	private Date date;
 	private String title;
 	private String body;
+
+	private List<CommentDTO> comments = new ArrayList<>();
 
 	private User author;
 
@@ -74,6 +80,14 @@ public class Post implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentDTO> comments) {
+		this.comments = comments;
 	}
 
 	@Override

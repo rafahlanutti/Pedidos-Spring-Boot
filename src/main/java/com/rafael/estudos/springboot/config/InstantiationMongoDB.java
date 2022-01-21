@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.rafael.estudos.springboot.domain.Post;
 import com.rafael.estudos.springboot.domain.User;
+import com.rafael.estudos.springboot.dto.CommentDTO;
 import com.rafael.estudos.springboot.repository.PostRepository;
 import com.rafael.estudos.springboot.repository.UserRepository;
 
@@ -35,6 +36,12 @@ public class InstantiationMongoDB implements CommandLineRunner {
 		Post post1 = new Post(null, sdf.parse("21/03/2020"), "Partiu Viagem", "Vou Viajar", maria);
 		Post post2 = new Post(null, sdf.parse("21/03/2020"), "Partiu Viagem", "Vou Viajar", maria);
 
+		CommentDTO commentDTO1 = new CommentDTO("Boa viagem mano", sdf.parse("21/03/2020"), alex);
+		CommentDTO commentDTO2 = new CommentDTO("Aproveite", sdf.parse("22/03/2020"), bob);
+		CommentDTO commentDTO3 = new CommentDTO("Tenha um ótimo dia", sdf.parse("21/03/2020"), maria);
+
+		post1.getComments().addAll(Arrays.asList(commentDTO1, commentDTO2));
+		post2.getComments().add(commentDTO3);
 		repository.saveAll(Arrays.asList(maria, alex, bob));
 		postRepository.saveAll(Arrays.asList(post1, post2));
 
