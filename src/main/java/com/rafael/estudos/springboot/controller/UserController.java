@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rafael.estudos.springboot.domain.Post;
 import com.rafael.estudos.springboot.domain.User;
 import com.rafael.estudos.springboot.dto.UserDTO;
 import com.rafael.estudos.springboot.service.UserMongoDBService;
@@ -37,6 +38,14 @@ public class UserController {
 
 		var user = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(user));
+
+	}
+
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPost(@PathVariable String id) {
+
+		var user = service.findById(id);
+		return ResponseEntity.ok().body(user.getPost());
 
 	}
 
