@@ -27,4 +27,14 @@ public class UserMongoDBService {
 	public User insert(User user) {
 		return repository.insert(user);
 	}
+
+	public User update(String id, User obj) {
+		this.findById(id);
+		return repository.save(obj);
+	}
+
+	public void delete(String id) {
+		this.findById(id);
+		repository.deleteById(id);
+	}
 }
