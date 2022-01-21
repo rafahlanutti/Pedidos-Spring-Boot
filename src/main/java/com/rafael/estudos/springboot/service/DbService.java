@@ -53,7 +53,6 @@ public class DbService {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
