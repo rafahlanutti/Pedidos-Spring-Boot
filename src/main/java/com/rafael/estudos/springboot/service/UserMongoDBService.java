@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rafael.estudos.springboot.domain.User;
+import com.rafael.estudos.springboot.exception.ObjectNotFoundException;
 import com.rafael.estudos.springboot.repository.UserRepository;
 
 @Service
@@ -16,5 +17,14 @@ public class UserMongoDBService {
 
 	public List<User> findAll() {
 		return repository.findAll();
+	}
+
+	public User findById(String id) {
+
+		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuario não encontrado"));
+	}
+
+	public User insert(User user) {
+		return repository.insert(user);
 	}
 }
