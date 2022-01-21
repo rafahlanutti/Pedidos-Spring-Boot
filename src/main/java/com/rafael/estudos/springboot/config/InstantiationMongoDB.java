@@ -42,6 +42,8 @@ public class InstantiationMongoDB implements CommandLineRunner {
 
 		post1.getComments().addAll(Arrays.asList(commentDTO1, commentDTO2));
 		post2.getComments().add(commentDTO3);
+	
+		
 		repository.saveAll(Arrays.asList(maria, alex, bob));
 		postRepository.saveAll(Arrays.asList(post1, post2));
 
