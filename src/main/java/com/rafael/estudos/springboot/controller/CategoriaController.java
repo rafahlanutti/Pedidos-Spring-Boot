@@ -22,13 +22,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.rafael.estudos.springboot.dto.CategoriaDTO;
 import com.rafael.estudos.springboot.service.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaController {
 
 	@Autowired
 	CategoriaService service;
-
+	@ApiOperation(value="Busca por id")
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> find(@PathVariable(value = "id") Integer id) {
 
@@ -36,6 +40,7 @@ public class CategoriaController {
 
 		return ResponseEntity.ok().body(categoria);
 	}
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO obj) {
@@ -45,6 +50,7 @@ public class CategoriaController {
 
 		return ResponseEntity.created(uri).build();
 	}
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@Valid @PathVariable(value = "id") Integer id, @RequestBody CategoriaDTO obj) {
@@ -54,8 +60,12 @@ public class CategoriaController {
 
 		return ResponseEntity.noContent().build();
 	}
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") })
 	public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
 		this.service.delete(id);
 
