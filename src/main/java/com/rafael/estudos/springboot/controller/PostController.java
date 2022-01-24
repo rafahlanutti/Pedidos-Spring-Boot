@@ -1,5 +1,6 @@
 package com.rafael.estudos.springboot.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,20 @@ public class PostController {
 
 		text = URL.decoreParam(text);
 		var posts = service.findByTitle(text);
+		return ResponseEntity.ok().body(posts);
+
+	}
+
+	@GetMapping(value = "/query")
+	public ResponseEntity<List<Post>> findByTitleSearch(@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate) {
+
+		text = URL.decoreParam(text);
+		var dateMin = URL.convertDate(minDate, new Date(0L));
+		var dateMax = URL.convertDate(maxDate, new Date());
+
+		var posts = service.querySarch(text, dateMin, dateMax);
 		return ResponseEntity.ok().body(posts);
 
 	}
