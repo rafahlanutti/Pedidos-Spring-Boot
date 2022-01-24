@@ -29,7 +29,7 @@ public class PostController {
 
 	}
 
-	@GetMapping(value = "/titlesearch/")
+	@GetMapping(value = "/titlesearch")
 	public ResponseEntity<List<Post>> findByTitleSearch(@RequestParam(value = "text", defaultValue = "") String text) {
 
 		text = URL.decoreParam(text);
